@@ -11,12 +11,10 @@ var data = null;
  * configuration catalog
  */
 function data_init(){
-
+    var url = dsn.data.url + "?r=" + Math.floor(new Date().getTime() / 5000)
     var client = new XMLHttpRequest();
     client.onreadystatechange = data_read;
-    client.open("GET", dsn.data.url + "?r=" + Math.floor(new Date().getTime() / 5000), true);
-    client.setRequestHeader("X-Requested-With","XMLHttpRequest"); 
-    // client should emit header "Origin"
+    client.open("GET", url, true);
     client.send();
 }
 function data_read(){
