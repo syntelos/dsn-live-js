@@ -14,7 +14,7 @@ function data_init(){
 
     var client = new XMLHttpRequest();
     client.onreadystatechange = data_read;
-    client.open("GET", dsn.data.url);
+    client.open("GET", dsn.data.url + "?r=" + Math.floor(new Date().getTime() / 5000), true);
     client.setRequestHeader("X-Requested-With","XMLHttpRequest"); 
     // client should emit header "Origin"
     client.send();
@@ -22,7 +22,7 @@ function data_init(){
 function data_read(){
 
     if (this.readyState == this.DONE) {
-        if (this.status == 200 &&
+        if ( (this.status == 200 || this.status == 0) &&
             this.responseXML != null)
         {
             data = [
@@ -43,6 +43,9 @@ function data_read(){
                     if ("station" == el.tagName){
 
                         data_station += 1;
+                        /*
+                         * Create station in list 'data'
+                         */
                         data[data_station] = {
                             system: el.getNamedItem("name").value,
                             display: el.getNamedItem("friendlyName").value,
@@ -122,6 +125,9 @@ function data_read(){
                             targets: object_targets
                         };
 
+                        /*
+                         * Append dish to list 'data'.
+                         */
                         data[data_station].dishes[data_station_dish++] = object_dish;
                     }
                     else if ("timestamp" == el.tagName){
