@@ -1,5 +1,5 @@
 
- Branch "gh_pages"
+ Branch "gh-pages" http://w.syntelos.net/dsn-live-js/
 
  Status: work in progress
 
